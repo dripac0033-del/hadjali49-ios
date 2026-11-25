@@ -1,0 +1,24 @@
+{
+  "name": "hadjali49 • Turbo Downloader & Media Studio",
+  "short_name": "hadjali49",
+  "description": "Multi-Threaded Turbo Downloader, YouTube & Master Audio Streamer and Media Player",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0F172A",
+  "theme_color": "#0F172A",
+  "icons": [
+    {
+      "src": "https://img.icons8.com/color/192/lightning-bolt.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://img.icons8.com/color/512/lightning-bolt.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -3,199 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>hadjali49 • iOS Web Edition</title>
+    <title>hadjali49 • Turbo Downloader & MP3 Studio</title>
+    
+    <!-- PWA & iOS Metadata -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="hadjali49">
     <meta name="theme-color" content="#0F172A">
+    <link rel="manifest" href="./manifest.json">
     <link rel="apple-touch-icon" href="https://img.icons8.com/color/512/lightning-bolt.png">
-    <style>
-        :root {
-            --bg-dark: #0F172A;
-            --card-dark: #1E293B;
-            --card-border: #334155;
-            --cyan: #06B6D4;
-            --green: #10B981;
-            --red: #F43F5E;
-            --text-gray: #94A3B8;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif; }
-        body { background-color: var(--bg-dark); color: #FFF; padding-bottom: 90px; -webkit-tap-highlight-color: transparent; }
-        header { background: #0B1120; padding: 16px 20px; border-bottom: 1px solid var(--card-border); position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; }
-        .brand { display: flex; align-items: center; gap: 10px; }
-        .brand-icon { font-size: 24px; color: var(--cyan); }
-        .brand-title { font-size: 18px; font-weight: 800; color: #FFF; }
-        .brand-sub { font-size: 11px; color: var(--text-gray); }
-        .badge-ios { background: rgba(6, 182, 212, 0.15); color: var(--cyan); border: 1px solid var(--cyan); font-size: 11px; font-weight: bold; padding: 4px 10px; border-radius: 20px; }
-        
-        .container { padding: 16px; max-width: 650px; margin: 0 auto; }
-        
-        /* Search Box */
-        .search-box { background: var(--card-dark); border: 1px solid var(--card-border); border-radius: 16px; padding: 8px 14px; display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
-        .search-box input { background: transparent; border: none; color: #FFF; font-size: 15px; width: 100%; outline: none; }
-        .search-box button { background: var(--cyan); border: none; color: #000; font-weight: bold; padding: 8px 18px; border-radius: 12px; cursor: pointer; font-size: 13px; }
-        
-        /* Stats Card */
-        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
-        .stat-item { background: var(--card-dark); border: 1px solid var(--card-border); border-radius: 14px; padding: 12px; text-align: center; }
-        .stat-label { font-size: 10px; color: var(--text-gray); font-weight: 600; text-transform: uppercase; }
-        .stat-val { font-size: 15px; font-weight: 800; margin-top: 4px; color: var(--cyan); }
-        
-        /* Results Card */
-        .result-card { background: var(--card-dark); border: 1px solid var(--card-border); border-radius: 16px; padding: 14px; margin-bottom: 12px; transition: transform 0.1s; }
-        .result-card:active { transform: scale(0.99); }
-        .result-title { font-size: 14px; font-weight: bold; line-height: 1.4; margin-bottom: 6px; }
-        .result-meta { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-gray); margin-bottom: 12px; }
-        .btn-group { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-        .btn-act { border: none; border-radius: 10px; padding: 9px 4px; font-size: 12px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; text-decoration: none; text-align: center; }
-        .btn-play { background: rgba(16, 185, 129, 0.2); color: var(--green); }
-        .btn-mp3 { background: var(--cyan); color: #000; }
-        .btn-mp4 { background: rgba(59, 130, 246, 0.25); color: #60A5FA; }
-        
-        /* Audio Player Bar */
-        #audio-player-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #0B1120; border-top: 1px solid var(--card-border); padding: 12px 16px; display: none; z-index: 200; box-shadow: 0 -4px 20px rgba(0,0,0,0.5); }
-        .player-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-        .player-title { font-size: 13px; font-weight: bold; color: #FFF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 75%; }
-        audio { width: 100%; height: 36px; border-radius: 8px; outline: none; }
-    </style>
+    <link rel="icon" type="image/png" href="https://img.icons8.com/color/192/lightning-bolt.png">
+    
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 
+    <!-- Header -->
     <header>
         <div class="brand">
             <span class="brand-icon">⚡</span>
             <div>
                 <div class="brand-title">hadjali49</div>
-                <div class="brand-sub">iOS Turbo Media Player & Downloader</div>
+                <div class="brand-sub">Turbo Downloader • MP3 Extractor • Studio Player</div>
             </div>
         </div>
-        <span class="badge-ios">iOS / iPhone</span>
+        <div class="header-actions">
+            <span class="badge-speed" id="headerSpeedBadge">0 B/s</span>
+            <button class="btn-icon" onclick="switchTab('ai')" title="Gemmy AI Assistant">🤖</button>
+        </div>
     </header>
 
     <div class="container">
-        <!-- Stats -->
-        <div class="stats-grid">
-            <div class="stat-item">
-                <div class="stat-label">Mode</div>
-                <div class="stat-val" style="color: var(--green);">Active 320k</div>
+
+        <!-- TAB 1: DOWNLOADS -->
+        <div id="tab-downloads" class="tab-pane active">
+            <!-- Stats Bar -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">ACTIVE</div>
+                    <div class="stat-val" id="statActiveCount" style="color: var(--cyan);">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">TOTAL SPEED</div>
+                    <div class="stat-val" style="color: var(--green);">Max Turbo</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">COMPLETED</div>
+                    <div class="stat-val" id="statCompletedCount" style="color: var(--amber);">0</div>
+                </div>
             </div>
-            <div class="stat-item">
-                <div class="stat-label">Audio Quality</div>
-                <div class="stat-val">Studio HD</div>
+
+            <!-- Add Custom Link Box -->
+            <div class="search-wrapper">
+                <input type="url" id="customUrlInput" placeholder="ضع رابط مباشر للتحميل السريع (HTTP, MP3, MP4, Zip)...">
+                <button class="btn-search" onclick="addCustomLinkDownload()">+ إضافة رابط</button>
             </div>
-            <div class="stat-item">
-                <div class="stat-label">Engine</div>
-                <div class="stat-val" style="color: var(--cyan);">Piped & Archive</div>
+
+            <!-- Active / Completed Tasks List -->
+            <div id="downloadsList"></div>
+        </div>
+
+        <!-- TAB 2: SOCIAL & MP3 -->
+        <div id="tab-social" class="tab-pane">
+            <div class="search-wrapper">
+                <input type="text" id="socialQueryInput" placeholder="ابحث عن أي أغنية (مثال: Didine Canon 16 - Skati)..." onkeydown="if(event.key==='Enter') searchSocial()">
+                <button class="btn-search" onclick="searchSocial()">بحث استوديو 🎵</button>
+            </div>
+            <div id="socialStatus" style="font-size: 13px; margin-bottom: 14px; font-weight: bold;"></div>
+            <div id="socialResultsContainer"></div>
+        </div>
+
+        <!-- TAB 3: INFINITE SEARCH -->
+        <div id="tab-search" class="tab-pane">
+            <div class="search-wrapper">
+                <input type="text" id="webSearchInput" placeholder="بحث شامل في الويب والمكتبات العالمية...">
+                <button class="btn-search" onclick="document.getElementById('socialQueryInput').value=document.getElementById('webSearchInput').value; switchTab('social'); searchSocial();">بحث شامل</button>
+            </div>
+            <div style="background: var(--card-dark); border: 1px solid var(--card-border); border-radius: 18px; padding: 20px; text-align: center;">
+                <span style="font-size: 36px;">🌐</span>
+                <h3 style="margin-top: 10px; font-size: 16px;">البحث اللانهائي الشامل</h3>
+                <p style="font-size: 13px; color: var(--text-muted); margin-top: 6px;">يدعم البحث واستخراج الوسائط المباشرة من أكثر من 14 مليون تسجيل ومستند في الأرشيف العالمي ويوتيوب.</p>
             </div>
         </div>
 
-        <!-- Search Bar -->
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="ابحث عن أغنية (مثال: Didine Canon 16 - Skati)..." onkeydown="if(event.key==='Enter') doSearch()">
-            <button onclick="doSearch()">بحث ⚡</button>
+        <!-- TAB 4: GEMMY AI ASSISTANT -->
+        <div id="tab-ai" class="tab-pane">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                <span style="font-size: 26px;">🤖</span>
+                <div>
+                    <h3 style="font-size: 16px;">Gemmy AI • المساعد الذكي</h3>
+                    <p style="font-size: 11px; color: var(--text-muted);">مساعدك داخل تطبيق hadjali49 للبحث واقتراح الموسيقى</p>
+                </div>
+            </div>
+
+            <div class="chat-box" id="aiChatBox">
+                <div class="chat-bubble ai">
+                    أهلاً بك! أنا <strong>Gemmy</strong> مساعدك الذكي داخل تطبيق hadjali49. يمكنك سؤالي عن أي أغنية، جلب مفتاح OmniRoute، أو الحصول على أفضل الروابط المباشرة!
+                </div>
+            </div>
+
+            <div class="search-wrapper">
+                <input type="text" id="aiChatInput" placeholder="اسأل Gemmy أي سؤال..." onkeydown="if(event.key==='Enter') sendAiMessage()">
+                <button class="btn-search" onclick="sendAiMessage()">إرسال 🚀</button>
+            </div>
         </div>
 
-        <div id="statusText" style="font-size: 12px; color: var(--text-gray); margin-bottom: 12px;"></div>
+        <!-- TAB 5: SETTINGS -->
+        <div id="tab-settings" class="tab-pane">
+            <div class="media-card">
+                <h3 style="font-size: 15px; margin-bottom: 12px; color: var(--cyan);">⚡ إعدادات محرك التحميل التوربو</h3>
+                <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px;">
+                    <span>عدد المسارات المتزامنة:</span>
+                    <strong style="color: var(--cyan);">16 مسار متوازي</strong>
+                </div>
+                <div class="progress-bar-bg" style="height: 10px;">
+                    <div class="progress-bar-fill" style="width: 100%;"></div>
+                </div>
+            </div>
 
-        <!-- Results List -->
-        <div id="resultsList"></div>
+            <div class="media-card">
+                <h3 style="font-size: 15px; margin-bottom: 12px; color: var(--green);">📱 تطبيق الويب التقدمي (PWA)</h3>
+                <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+                    تطبيق <strong>hadjali49</strong> يدعم العمل كـ PWA أصلي بملء الشاشة على جميع الأجهزة:
+                    <br>• <strong>iPhone / iPad</strong>: اضغط على زر المشاركة ثم "إضافة إلى الشاشة الرئيسية".
+                    <br>• <strong>Android</strong>: اضغط على القائمة ثم "تثبيت التطبيق".
+                    <br>• <strong>الكمبيوتر (Chrome/Edge)</strong>: اضغط على أيقونة التثبيت في شريط العنوان.
+                </p>
+            </div>
+        </div>
+
     </div>
 
-    <!-- Floating Audio Player Bar -->
-    <div id="audio-player-bar">
-        <div class="player-info">
-            <span class="player-title" id="nowPlayingTitle">جاهز للتشغيل</span>
-            <span style="font-size: 11px; color: var(--green); font-weight: bold;">مشغل نقي 320k</span>
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+        <button class="nav-item active" id="nav-downloads" onclick="switchTab('downloads')">
+            <span class="nav-icon">⚡</span>
+            <span>التنزيلات</span>
+        </button>
+        <button class="nav-item" id="nav-social" onclick="switchTab('social')">
+            <span class="nav-icon">🎵</span>
+            <span>Social & MP3</span>
+        </button>
+        <button class="nav-item" id="nav-search" onclick="switchTab('search')">
+            <span class="nav-icon">🌐</span>
+            <span>بحث شامل</span>
+        </button>
+        <button class="nav-item" id="nav-ai" onclick="switchTab('ai')">
+            <span class="nav-icon">🤖</span>
+            <span>Gemmy AI</span>
+        </button>
+        <button class="nav-item" id="nav-settings" onclick="switchTab('settings')">
+            <span class="nav-icon">⚙️</span>
+            <span>الإعدادات</span>
+        </button>
+    </nav>
+
+    <!-- Dedicated In-App Studio Player Modal -->
+    <div id="playerModal" class="modal-overlay">
+        <div class="player-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <button onclick="closePlayerModal()" style="background: none; border: none; font-size: 22px; color: var(--text-muted); cursor: pointer;">✕</button>
+                <span style="font-size: 13px; font-weight: bold; color: var(--cyan);">مشغل استوديو hadjali49 🎧</span>
+                <button onclick="if(navigator.share){navigator.share({title:document.getElementById('playerSongTitle').innerText, url:currentAudio.src});}" style="background: none; border: none; font-size: 20px; color: var(--cyan); cursor: pointer;">📤</button>
+            </div>
+
+            <!-- Spinning Vinyl Record Disc -->
+            <div class="vinyl-disc" id="vinylDisc">🎵</div>
+
+            <h3 id="playerSongTitle" style="font-size: 16px; font-weight: 800; margin-bottom: 4px; line-height: 1.4;">جاهز للتشغيل</h3>
+            <p id="playerSongSub" style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">Master Studio 320k</p>
+
+            <!-- Scrubber Slider -->
+            <input type="range" id="playerScrubber" min="0" max="100" value="0" style="width: 100%; accent-color: var(--cyan);" oninput="seekAudio(this.value)">
+            <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); margin-top: 4px;">
+                <span id="playerTimeCurrent">0:00</span>
+                <span id="playerTimeTotal">0:00</span>
+            </div>
+
+            <!-- Controls -->
+            <div class="player-controls">
+                <button class="btn-ctrl" onclick="seekRelative(-10)" title="رجوع 10 ثواني">⏪</button>
+                <button class="btn-play-master" id="btnMasterPlay" onclick="togglePlay()">▶</button>
+                <button class="btn-ctrl" onclick="seekRelative(10)" title="تقديم 10 ثواني">⏩</button>
+            </div>
+
+            <!-- Speed & Loop Toolbar -->
+            <div style="display: flex; justify-content: center; gap: 16px; margin-top: 10px;">
+                <button class="btn-ctrl" id="btnPlayerSpeed" onclick="cycleSpeed()" style="width: auto; padding: 0 14px; border-radius: 12px; font-size: 12px; font-weight: bold; color: var(--cyan);">1x</button>
+                <button class="btn-ctrl" id="btnPlayerLoop" onclick="toggleLoop()" style="font-size: 14px;">🔁</button>
+            </div>
         </div>
-        <audio id="nativeAudio" controls autoplay></audio>
     </div>
 
-    <script>
-        const PIPED_NODES = [
-            'https://api.piped.private.coffee',
-            'https://pipedapi.nosebs.ru',
-            'https://piped-api.privacy.com.de'
-        ];
-
-        async function doSearch() {
-            const q = document.getElementById('searchInput').value.trim();
-            if (!q) return;
-
-            const status = document.getElementById('statusText');
-            const list = document.getElementById('resultsList');
-            status.innerText = "جاري البحث في قاعدة البيانات وأرشيف الموسيقى...";
-            list.innerHTML = "";
-
-            try {
-                // Archive.org clean search
-                const cleanQ = q.replace(/[-_()\[\]]/g, ' ').trim();
-                const archiveUrl = `https://archive.org/advancedsearch.php?q=(${encodeURIComponent(cleanQ)})+AND+mediatype:audio&fl[]=identifier,title,creator&sort[]=downloads+desc&rows=15&output=json`;
-                
-                const resp = await fetch(archiveUrl);
-                const data = await resp.json();
-                const docs = data.response?.docs || [];
-
-                status.innerText = `تم العثور على ${docs.length} تسجيل استوديو ماستر مباشر:`;
-
-                if (docs.length === 0) {
-                    list.innerHTML = `<div style="text-align: center; color: var(--text-gray); padding: 40px 0;">لم يتم العثور على نتائج، جرب كلمات أخرى (مثل اسم الفنان فقط).</div>`;
-                    return;
-                }
-
-                docs.forEach(d => {
-                    const id = d.identifier;
-                    const title = d.title || id;
-                    const creator = d.creator || "Studio Recording";
-                    const directUrl = `https://archive.org/download/${id}/${id}.mp3`;
-
-                    const card = document.createElement('div');
-                    card.className = "result-card";
-                    card.innerHTML = `
-                        <div class="result-title">${title}</div>
-                        <div class="result-meta">
-                            <span>👤 ${creator}</span>
-                            <span style="color: var(--cyan); font-weight: bold;">320kbps MP3</span>
-                        </div>
-                        <div class="btn-group">
-                            <button class="btn-act btn-play" onclick="playAudio('${escape(title)}', '${id}')">▶ استماع</button>
-                            <a class="btn-act btn-mp3" href="${directUrl}" download="${title}.mp3" target="_blank">⬇ تحميل MP3</a>
-                            <a class="btn-act btn-mp4" href="https://archive.org/details/${id}" target="_blank">🔍 تفاصيل</a>
-                        </div>
-                    `;
-                    list.appendChild(card);
-                });
-            } catch (err) {
-                status.innerText = "تعذر إكمال البحث. يرجى التحقق من الاتصال بالإنترنت.";
-            }
-        }
-
-        async function playAudio(title, id) {
-            const bar = document.getElementById('audio-player-bar');
-            const player = document.getElementById('nativeAudio');
-            const nowTitle = document.getElementById('nowPlayingTitle');
-
-            nowTitle.innerText = unescape(title);
-            bar.style.display = 'block';
-
-            try {
-                // Get exact audio file from archive metadata
-                const metaResp = await fetch(`https://archive.org/metadata/${id}`);
-                const meta = await metaResp.json();
-                const files = meta.files || [];
-                const audioFile = files.find(f => f.name.toLowerCase().endsWith('.mp3') || f.name.toLowerCase().endsWith('.m4a'));
-                
-                if (audioFile) {
-                    player.src = `https://archive.org/download/${id}/${audioFile.name}`;
-                    player.play();
-                } else {
-                    player.src = `https://archive.org/download/${id}/${id}.mp3`;
-                    player.play();
-                }
-            } catch (e) {
-                player.src = `https://archive.org/download/${id}/${id}.mp3`;
-                player.play();
-            }
-        }
-    </script>
+    <script src="./app.js"></script>
 </body>
 </html>
