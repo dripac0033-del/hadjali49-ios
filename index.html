@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>hadjali49 • iOS Web Edition</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="hadjali49">
+    <meta name="theme-color" content="#0F172A">
+    <link rel="apple-touch-icon" href="https://img.icons8.com/color/512/lightning-bolt.png">
+    <style>
+        :root {
+            --bg-dark: #0F172A;
+            --card-dark: #1E293B;
+            --card-border: #334155;
+            --cyan: #06B6D4;
+            --green: #10B981;
+            --red: #F43F5E;
+            --text-gray: #94A3B8;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif; }
+        body { background-color: var(--bg-dark); color: #FFF; padding-bottom: 90px; -webkit-tap-highlight-color: transparent; }
+        header { background: #0B1120; padding: 16px 20px; border-bottom: 1px solid var(--card-border); position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; }
+        .brand { display: flex; align-items: center; gap: 10px; }
+        .brand-icon { font-size: 24px; color: var(--cyan); }
+        .brand-title { font-size: 18px; font-weight: 800; color: #FFF; }
+        .brand-sub { font-size: 11px; color: var(--text-gray); }
+        .badge-ios { background: rgba(6, 182, 212, 0.15); color: var(--cyan); border: 1px solid var(--cyan); font-size: 11px; font-weight: bold; padding: 4px 10px; border-radius: 20px; }
+        
+        .container { padding: 16px; max-width: 650px; margin: 0 auto; }
+        
+        /* Search Box */
+        .search-box { background: var(--card-dark); border: 1px solid var(--card-border); border-radius: 16px; padding: 8px 14px; display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+        .search-box input { background: transparent; border: none; color: #FFF; font-size: 15px; width: 100%; outline: none; }
+        .search-box button { background: var(--cyan); border: none; color: #000; font-weight: bold; padding: 8px 18px; border-radius: 12px; cursor: pointer; font-size: 13px; }
+        
+        /* Stats Card */
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+        .stat-item { background: var(--card-dark); border: 1px solid var(--card-border); border-radius: 14px; padding: 12px; text-align: center; }
+        .stat-label { font-size: 10px; color: var(--text-gray); font-weight: 600; text-transform: uppercase; }
+        .stat-val { font-size: 15px; font-weight: 800; margin-top: 4px; color: var(--cyan); }
+        
+        /* Results Card */
+        .result-card { background: var(--card-dark); border: 1px solid var(--card-border); border-radius: 16px; padding: 14px; margin-bottom: 12px; transition: transform 0.1s; }
+        .result-card:active { transform: scale(0.99); }
+        .result-title { font-size: 14px; font-weight: bold; line-height: 1.4; margin-bottom: 6px; }
+        .result-meta { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-gray); margin-bottom: 12px; }
+        .btn-group { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+        .btn-act { border: none; border-radius: 10px; padding: 9px 4px; font-size: 12px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; text-decoration: none; text-align: center; }
+        .btn-play { background: rgba(16, 185, 129, 0.2); color: var(--green); }
+        .btn-mp3 { background: var(--cyan); color: #000; }
+        .btn-mp4 { background: rgba(59, 130, 246, 0.25); color: #60A5FA; }
+        
+        /* Audio Player Bar */
+        #audio-player-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #0B1120; border-top: 1px solid var(--card-border); padding: 12px 16px; display: none; z-index: 200; box-shadow: 0 -4px 20px rgba(0,0,0,0.5); }
+        .player-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .player-title { font-size: 13px; font-weight: bold; color: #FFF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 75%; }
+        audio { width: 100%; height: 36px; border-radius: 8px; outline: none; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand">
+            <span class="brand-icon">⚡</span>
+            <div>
+                <div class="brand-title">hadjali49</div>
+                <div class="brand-sub">iOS Turbo Media Player & Downloader</div>
+            </div>
+        </div>
+        <span class="badge-ios">iOS / iPhone</span>
+    </header>
+
+    <div class="container">
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-label">Mode</div>
+                <div class="stat-val" style="color: var(--green);">Active 320k</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Audio Quality</div>
+                <div class="stat-val">Studio HD</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Engine</div>
+                <div class="stat-val" style="color: var(--cyan);">Piped & Archive</div>
+            </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="ابحث عن أغنية (مثال: Didine Canon 16 - Skati)..." onkeydown="if(event.key==='Enter') doSearch()">
+            <button onclick="doSearch()">بحث ⚡</button>
+        </div>
+
+        <div id="statusText" style="font-size: 12px; color: var(--text-gray); margin-bottom: 12px;"></div>
+
+        <!-- Results List -->
+        <div id="resultsList"></div>
+    </div>
+
+    <!-- Floating Audio Player Bar -->
+    <div id="audio-player-bar">
+        <div class="player-info">
+            <span class="player-title" id="nowPlayingTitle">جاهز للتشغيل</span>
+            <span style="font-size: 11px; color: var(--green); font-weight: bold;">مشغل نقي 320k</span>
+        </div>
+        <audio id="nativeAudio" controls autoplay></audio>
+    </div>
+
+    <script>
+        const PIPED_NODES = [
+            'https://api.piped.private.coffee',
+            'https://pipedapi.nosebs.ru',
+            'https://piped-api.privacy.com.de'
+        ];
+
+        async function doSearch() {
+            const q = document.getElementById('searchInput').value.trim();
+            if (!q) return;
+
+            const status = document.getElementById('statusText');
+            const list = document.getElementById('resultsList');
+            status.innerText = "جاري البحث في قاعدة البيانات وأرشيف الموسيقى...";
+            list.innerHTML = "";
+
+            try {
+                // Archive.org clean search
+                const cleanQ = q.replace(/[-_()\[\]]/g, ' ').trim();
+                const archiveUrl = `https://archive.org/advancedsearch.php?q=(${encodeURIComponent(cleanQ)})+AND+mediatype:audio&fl[]=identifier,title,creator&sort[]=downloads+desc&rows=15&output=json`;
+                
+                const resp = await fetch(archiveUrl);
+                const data = await resp.json();
+                const docs = data.response?.docs || [];
+
+                status.innerText = `تم العثور على ${docs.length} تسجيل استوديو ماستر مباشر:`;
+
+                if (docs.length === 0) {
+                    list.innerHTML = `<div style="text-align: center; color: var(--text-gray); padding: 40px 0;">لم يتم العثور على نتائج، جرب كلمات أخرى (مثل اسم الفنان فقط).</div>`;
+                    return;
+                }
+
+                docs.forEach(d => {
+                    const id = d.identifier;
+                    const title = d.title || id;
+                    const creator = d.creator || "Studio Recording";
+                    const directUrl = `https://archive.org/download/${id}/${id}.mp3`;
+
+                    const card = document.createElement('div');
+                    card.className = "result-card";
+                    card.innerHTML = `
+                        <div class="result-title">${title}</div>
+                        <div class="result-meta">
+                            <span>👤 ${creator}</span>
+                            <span style="color: var(--cyan); font-weight: bold;">320kbps MP3</span>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn-act btn-play" onclick="playAudio('${escape(title)}', '${id}')">▶ استماع</button>
+                            <a class="btn-act btn-mp3" href="${directUrl}" download="${title}.mp3" target="_blank">⬇ تحميل MP3</a>
+                            <a class="btn-act btn-mp4" href="https://archive.org/details/${id}" target="_blank">🔍 تفاصيل</a>
+                        </div>
+                    `;
+                    list.appendChild(card);
+                });
+            } catch (err) {
+                status.innerText = "تعذر إكمال البحث. يرجى التحقق من الاتصال بالإنترنت.";
+            }
+        }
+
+        async function playAudio(title, id) {
+            const bar = document.getElementById('audio-player-bar');
+            const player = document.getElementById('nativeAudio');
+            const nowTitle = document.getElementById('nowPlayingTitle');
+
+            nowTitle.innerText = unescape(title);
+            bar.style.display = 'block';
+
+            try {
+                // Get exact audio file from archive metadata
+                const metaResp = await fetch(`https://archive.org/metadata/${id}`);
+                const meta = await metaResp.json();
+                const files = meta.files || [];
+                const audioFile = files.find(f => f.name.toLowerCase().endsWith('.mp3') || f.name.toLowerCase().endsWith('.m4a'));
+                
+                if (audioFile) {
+                    player.src = `https://archive.org/download/${id}/${audioFile.name}`;
+                    player.play();
+                } else {
+                    player.src = `https://archive.org/download/${id}/${id}.mp3`;
+                    player.play();
+                }
+            } catch (e) {
+                player.src = `https://archive.org/download/${id}/${id}.mp3`;
+                player.play();
+            }
+        }
+    </script>
+</body>
+</html>
