@@ -1,0 +1,28 @@
+name: hadjali49
+options:
+  bundleIdPrefix: com.hadjali49
+  deploymentTarget:
+    iOS: "16.0"
+targets:
+  hadjali49:
+    type: application
+    platform: iOS
+    sources:
+      - path: hadjali49/App
+      - path: hadjali49/Models
+      - path: hadjali49/Engine
+      - path: hadjali49/Views
+    info:
+      path: hadjali49/Resources/Info.plist
+      properties:
+        CFBundleDisplayName: hadjali49
+        CFBundleShortVersionString: "2.2.0"
+        CFBundleVersion: "13"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.hadjali49.ios
+        SWIFT_VERSION: "5.9"
+        GENERATE_INFOPLIST_FILE: false
+        INFOPLIST_FILE: hadjali49/Resources/Info.plist
+        TARGETED_DEVICE_FAMILY: "1,2"
+        ENABLE_BITCODE: false

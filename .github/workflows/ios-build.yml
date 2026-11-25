@@ -1,0 +1,51 @@
+name: Build iOS IPA (hadjali49)
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-ipa:
+    runs-on: macos-14
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Select Xcode Version
+        run: sudo xcode-select -s /Applications/Xcode_15.4.app/Contents/Developer
+
+      - name: Install xcodegen
+        run: brew install xcodegen
+
+      - name: Generate Xcode Project
+        run: xcodegen generate
+
+      - name: Build Archive
+        run: |
+          xcodebuild archive \
+            -project hadjali49.xcodeproj \
+            -scheme hadjali49 \
+            -configuration Release \
+            -destination "generic/platform=iOS" \
+            -archivePath build/hadjali49.xcarchive \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            AD_HOC_CODE_SIGNING_ALLOWED=YES
+
+      - name: Package into IPA
+        run: |
+          mkdir -p build/Payload
+          cp -r build/hadjali49.xcarchive/Products/Applications/hadjali49.app build/Payload/
+          cd build
+          zip -r hadjali49-v2.2.0.ipa Payload
+          echo "✔ IPA Created: build/hadjali49-v2.2.0.ipa"
+
+      - name: Upload IPA Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: hadjali49-v2.2.0-ipa
+          path: build/hadjali49-v2.2.0.ipa
+          retention-days: 30
