@@ -120,8 +120,8 @@ async function searchSocial() {
 function formatSongTitle(rawTitle, creator) {
     if (!rawTitle) return creator || "Audio Track";
     let cleaned = rawTitle
-        .replace(/(?i)\s*[([].*?(official|clip|video|audio|remastered|4k|hd|lyrics|reaction|boussadat|20\d\d).*?[)\]]/gi, '')
-        .replace(/(?i)\b(official\s+video|clip\s+officiel|music\s+video|remastered|reaction|boussadat)\b/gi, '')
+        .replace(/\s*[([].*?(official|clip|video|audio|remastered|4k|hd|lyrics|reaction|boussadat|20\d\d).*?[)\]]/gi, '')
+        .replace(/\b(official\s+video|clip\s+officiel|music\s+video|remastered|reaction|boussadat)\b/gi, '')
         .replace(/[|"']/g, ' ')
         .replace(/\s{2,}/g, ' ')
         .trim();
